@@ -1,0 +1,142 @@
+# Hier soll es eine Funktion geben. nicht class
+def CampellDudekSmith(inputJobs):
+
+    solutionPool = {}
+    nMachines = len(inputJobs[0].Operations) 
+
+    for i in range(len(inputJobs)):
+
+        minimumFirstMachine = []
+        notMinimumFirstMachine = []
+
+        for j, job in enumerate(inputJobs):
+
+            thetaFirst = sum(job.ProcessingTime(x) for x in range(nMachines-i,nMachines))
+            thetaSecond = sum(job.ProcessingTime(x) for x in range(0,i + 1))
+
+            if(thetaFirst != thetaSecond):
+                minimumFirstMachine.append((j,thetaFirst))
+            else:
+                notMinimumFirstMachine.append((j,thetaFirst))
+
+        minimumFirstMachine.sort(key=lambda x: x[0])
+        notMinimumFirstMachine.sort(key=lambda x: x[1], reverse = True)
+     
+        tmpPermutation = [x[0] for x in minimumFirstMachine]
+        tmpPermutation.extend([x[0] for x in notMinimumFirstMachine])
+  
+        tmpSolution = Solution(inputJobs, tmpPermutation)
+        
+        solutionPool[i] = tmpSolution
+
+    return bestSolution
+
+# man muss richtigen Name von Methode benutzen
+# wir suchen nach Loesungen, dann InputJobs ist richtig
+CDSSol = CampellDudekSmith(data.InputJobs)
+print(CDSSol)
+
+
+
+
+
+
+
+
+# Hier soll es eine Funktion geben. nicht class
+def CampellDudekSmith(inputJobs):
+
+    solutionPool = {}
+    nMachines = len(inputJobs[0].Operations) 
+
+    for i in range(nMachines-1): # i soll die Anzahl von Maschinen sein, hat nichts zu tun mit jobs. i muss < nMachines sein
+
+        minimumFirstMachine = []
+        notMinimumFirstMachine = []
+
+        for j, job in enumerate(inputJobs):
+            # Reihenfolge von theta sind korrigiert.
+            thetaFirst = sum(job.ProcessingTime(x) for x in range(0,i + 1))
+            thetaSecond = sum(job.ProcessingTime(x) for x in range(nMachines-i-1,nMachines)) # hier muss nMachines-i-1 sein, zB i == 0, gibt es kein x fuer thetasecond
+
+            if(thetaFirst <= thetaSecond): #wenn Zeit anf M1 weniger als M2
+                minimumFirstMachine.append((j,thetaFirst))
+            else:
+                notMinimumFirstMachine.append((j,thetaFirst))
+
+        minimumFirstMachine.sort(key=lambda x: x[1]) # sorted by x[1]
+        notMinimumFirstMachine.sort(key=lambda x: x[1], reverse = True)
+     
+        tmpPermutation = [x[0] for x in minimumFirstMachine]
+        tmpPermutation.extend([x[0] for x in notMinimumFirstMachine])
+  
+        tmpSolution = Solution(inputJobs, tmpPermutation)
+        
+        solutionPool[i] = tmpSolution
+
+    candidate = {}
+    for index, solution in solutionPool.items():
+        candidate[index] = solution.Makespan
+
+    bestSolution_index = min(candidate, key=candidate.get)
+    bestSolution = solutionPool[bestSolution_index]
+    return bestSolution
+
+# man muss richtigen Name von Methode benutzen
+# wir suchen nach Loesungen, dann InputJobs ist richtig
+CDSSol = CampellDudekSmith(data.InputJobs)
+print(CDSSol)
+
+
+
+
+
+
+import pandas as pd
+
+def CampellDudekSmith2 ( inputJobs ):
+# Matrix aufbauen
+    processingTimes = []
+    for job in inputJobs : 
+        processingTimes . append ([ operation [1] for operation in job .Operations ]) 
+    df = pd. DataFrame ( processingTimes )
+
+ # Variablen setzen
+    solutions = []
+    m = len ( inputJobs [0]. Operations ) # Anzahl Maschinen
+    n = len ( inputJobs ) # Anzahl Jobs
+    p = m - 1
+    for k in range (1, p + 1):
+        processingTimesM1 = df. iloc [: ,0:k]. sum ( axis = 1) # Zeilenweise Summe der ersten k Spalten
+        processingTimesM2 = df. iloc [:,n-k:n]. sum ( axis = 1) # Zeileweise Summe der letzten k Spalten
+        TwoMaschineProblem = pd. DataFrame ([ processingTimesM1 , processingTimesM2 ]). transpose () # Zusammenf ¨u gen der beiden Spalten in ein DataFrame , Transponieren n¨otig , damit DataFrame zwei Spalten statt 2 Zeilen enth ¨alt
+        sol = Solution ( inputJobs , solve2MaschineNJobsProblem ( TwoMaschineProblem ))
+        EvaluationLogic (). DefineStartEnd ( sol )
+        solutions . append (sol )
+
+ # finde beste L¨o sung
+    bestSol = None
+    for solution in solutions :
+        if bestSol == None or bestSol . Makespan > solution . Makespan :
+            bestSol = solution
+
+    return bestSol
+
+def solve2MaschineNJobsProblem (df):
+    vorderePlaetze = []
+    hinterePlaetze = []
+    for n in range (len (df)):
+        min1 = df [0]. min () # Minimum der ersten Spalte
+        min2 = df [1]. min () # Minimum der zweiten Spalte
+        if min1 < min2 :
+# Ist das Minimum in der ersten Spalte zu finden , dann wird der Job vorne eingef ¨ugt
+            vorderePlaetze . append (df [0]. idxmin ())
+            df. drop (df [0]. idxmin () , inplace = True ) # L¨o schen des Jobs
+        else :
+ # Ist das Minimum in der zweiten Spalte zu finden , dann wird der Job hinten eingef ¨ugt
+            hinterePlaetze . append (df [1]. idxmin ())
+            df. drop (df [1]. idxmin () , inplace = True ) # L¨o schen des Jobs
+
+    return vorderePlaetze + hinterePlaetze [:: -1]
+
+print ( CampellDudekSmith2 ( data . InputJobs ))
