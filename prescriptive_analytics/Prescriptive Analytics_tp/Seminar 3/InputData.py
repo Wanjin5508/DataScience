@@ -7,15 +7,12 @@ class DataMachine:
 
     def __str__(self):
         result = "Machine " + str(self.__machId)
-
-        return result
-         
+        return result      
     @property
     def MachineId(self):
         return self.__machId
 
-class DataJob:
-    
+class DataJob: 
     def __init__(self, idJob, processingTimes, setupTimes, dueDate, tardinessCost):
         self.__jobId = idJob
         self.__processingTimes = processingTimes
