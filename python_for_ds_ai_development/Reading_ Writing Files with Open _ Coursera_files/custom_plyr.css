@@ -1,0 +1,96 @@
+div.editormd-preview {
+    --plyr-color-main: #486581;
+    --plyr-audio-controls-background: #DDDDDD;
+    --plyr-audio-control-color: #666;
+    --plyr-audio-control-color-hover: #DDDDDD;
+    --plyr-audio-progress-buffered-background: #F4F4F4;
+    --plyr-menu-color: #666;
+    --plyr-menu-background: #F4F4F4;
+    --plyr-menu-arrow-color: #486581;
+    --plyr-tooltip-background: #F4F4F4;
+    --plyr-tooltip-color: #666;
+    --audio-outdated-color: #FFA500;
+    --audio-invalid-color: #DC143C;
+}
+
+div.editormd-preview-theme-dark {
+    --plyr-color-main: #bcccdc;
+    --plyr-audio-controls-background: #3C3C3C;
+    --plyr-audio-control-color: #FFFFFF;
+    --plyr-audio-control-color-hover: #3C3C3C;
+    --plyr-audio-progress-buffered-background: #707070;
+    --plyr-menu-color: #FFFFFF;
+    --plyr-menu-background: #707070;
+    --plyr-menu-arrow-color: #bcccdc;
+    --plyr-tooltip-background: #707070;
+    --plyr-tooltip-color: #FFFFFF;
+    --audio-outdated-color: #FFB74D;
+    --audio-invalid-color: #FF6347;
+}
+
+.plyr__menu__container {
+    bottom: 0;
+    top: 100%;
+}
+
+#audio-widget {
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-top: 15px;
+    margin-bottom: 15px;
+    background: var(--preview-container-background);
+}
+
+#audio-container {
+    background: var(--preview-container-background);
+    z-index: 1;
+}
+
+#audioToggleButton {
+    width: 45px;
+}
+
+#audio-toggle-button>button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+#audioToggleButton.collapsed:after {
+    content: "\f103";
+    font-family: "FontAwesome";
+}
+
+#audioToggleButton:not(.collapsed):after {
+    content: "\f102";
+    font-family: "FontAwesome";
+}
+
+.plyr__menu__container>div {
+    background: inherit;
+}
+
+.plyr.plyr--full-ui {
+    border-radius: 10px;
+}
+
+#audio-widget.disabled .plyr {
+    opacity: 50%;;
+}
+
+#audio-widget.disabled .plyr, #audio-widget.disabled .plyr__controls__item, #audio-widget.disabled .plyr__controls__item > input {
+    cursor: not-allowed;
+}
+
+#audio-widget.disabled .plyr__progress, #audio-widget.disabled .plyr__control, #audio-widget.disabled .plyr__controls__item > input {
+    pointer-events: none;
+}
+
+#audioWarning{
+    color: var(--audio-invalid-color);
+    position: relative;
+    left:100%
+}
+
+#audioWarning.outdated {
+    color: var(--audio-outdated-color);
+}

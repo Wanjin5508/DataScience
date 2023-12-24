@@ -1,0 +1,63 @@
+div.editormd-preview {
+    --popover-background-color-primary: #F4F4F4;
+    --popover-header-background-color: #DDDDDD;
+    --popover-header-text-color: #333;
+    --popover-header-divider-color: #E8E8E8;
+    --popover-body-text-color: #666;
+}
+
+/* 'body' sets dark mode popovers by default for the entire editor in edit mode because this is the only theme colour we support for the editor as of now
+'div.editormd-preview-theme-dark' and 'div.editormd-preview' sets theme-based popovers inside the preview container as this is where we spawn them for preview container(audio section plyr is an example) */
+body, div.editormd-preview-theme-dark {
+    --popover-background-color-primary: #393939;
+    --popover-header-background-color: #3C3C3C;
+    --popover-header-text-color: #F4F4F4;
+    --popover-header-divider-color: #333333;
+    --popover-body-text-color: #C6C6C6;
+}
+
+div.popover {
+    border: none;
+    box-shadow: 0px 3px 15px 0px #000000BF;
+    -webkit-box-shadow: 0px 3px 15px 0px #000000BF;
+}
+
+div.popover div.popover-body p:last-of-type {
+    margin-bottom: 5px;
+}
+
+div.popover .popover-header {
+    padding: 12px 16px;
+    color: var(--popover-header-text-color);
+    background: var(--popover-header-background-color);
+    border-bottom: 1px solid var(--popover-header-divider-color);
+}
+
+div.popover div.popover-body {
+    padding: 12px 16px;
+    color: var(--popover-body-text-color);
+    background: var(--popover-background-color-primary);
+}
+
+div.popover div.popover-body a {
+    color: #4589FF;
+}
+
+div.popover div.popover-body a:hover {
+    color: #3e7be5;
+}
+
+.bs-popover-auto[x-placement^=bottom] .popover-header::before,
+.bs-popover-bottom .popover-header::before {
+    border-bottom: 1px solid var(--popover-background-color-primary) !important;
+}
+
+.bs-popover-auto[x-placement^=bottom]>.arrow::after,
+.bs-popover-bottom>.arrow::after {
+    border-bottom-color: var(--popover-header-background-color) !important;
+}
+
+.bs-popover-auto[x-placement^=top]>.arrow::after,
+.bs-popover-top>.arrow::after {
+    border-top-color: var(--popover-header-background-color) !important;
+}
